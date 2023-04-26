@@ -2585,6 +2585,20 @@ class PUTRequest(urllib.request.Request):
         return 'PUT'
 
 
+def strint_or_none(v, scale=1, default=None, get_attr=None, invscale=1):
+    if get_attr and v is not None:
+        v = getattr(v, get_attr, None)
+    if isinstance(v, str) and (v[-1].lower() == "w" or v[-1].lower() == "k"):
+        try:
+            v = float(v[:-1]) * (1000 if v[-1].lower() == "k" else 10000)
+        except (ValueError, TypeError, OverflowError):
+            return default
+    try:
+        return int(v) * invscale // scale
+    except (ValueError, TypeError, OverflowError):
+        return default
+
+
 def int_or_none(v, scale=1, default=None, get_attr=None, invscale=1):
     if get_attr and v is not None:
         v = getattr(v, get_attr, None)

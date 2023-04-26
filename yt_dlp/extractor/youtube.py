@@ -64,6 +64,7 @@ from ..utils import (
     url_or_none,
     urljoin,
     variadic,
+    strint_or_none,
 )
 
 # any clients starting with _ cannot be explicitly requested by the user
@@ -4244,7 +4245,7 @@ class YoutubeIE(YoutubeBaseInfoExtractor):
         ), (
             'engagementPanels', lambda _, v: v['engagementPanelSectionListRenderer']['panelIdentifier'] == 'comment-item-section',
             'engagementPanelSectionListRenderer', 'header', 'engagementPanelTitleHeaderRenderer', 'contextualInfo', 'runs', ..., 'text'
-        ), expected_type=int_or_none, get_all=False)
+        ), expected_type=strint_or_none, get_all=False)
 
         try:  # This will error if there is no livechat
             initial_data['contents']['twoColumnWatchNextResults']['conversationBar']['liveChatRenderer']['continuations'][0]['reloadContinuationData']['continuation']
